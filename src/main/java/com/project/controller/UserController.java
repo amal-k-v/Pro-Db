@@ -3,6 +3,7 @@ package com.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,15 @@ import com.project.model.User;
 import com.project.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
+	
+	
+	
 	@Autowired UserService userservice;
 	
-	  
+	
 	@GetMapping("/")
 	public String hello(@RequestParam(value = "name", defaultValue = "Amal") String name) {
 		 return String.format("Hello %s!", name);

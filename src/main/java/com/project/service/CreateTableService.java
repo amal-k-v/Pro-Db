@@ -3,12 +3,15 @@ package com.project.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.project.model.Columns;
 import com.project.model.CreateTable;
-import com.project.model.User;
+import com.project.model.Row;
 import com.project.repository.CreateTableRepo;
 
 @Service
@@ -38,5 +41,68 @@ public class CreateTableService {
 		  createTableRepo.deleteById(tableid);
 	  }
 	  
+	  public void updateById(CreateTable createdtable,Long tableid,String type)   
+	  {   
+		  CreateTable table= getTablesById(tableid);
+		  if(type==null||type.isEmpty()||type.equals("all")) {
+		  table.setName(createdtable.getName());
+		  table.setDescription(createdtable.getDescription());
+		  table.setColumns(createdtable.getColumns());
+		  }
+		  else if (type.equals("name")) {
+			  table.setName(createdtable.getName());
+			}
+		  else if (type.equals("des")) {
+			  table.setDescription(createdtable.getDescription());
+			}
+		  else if (type.equals("col")) {
+			  table.setColumns(createdtable.getColumns());
+			}
+		  else if (type.equals("row")) {
+			 
+			  List<Columns>col=createdtable.getColumns();
+			  JSONObject obj=new JSONObject(); 
+			 for(Columns columns:col) {
+				 System.out.println(columns);
+				 
+				 System.out.println("Rows-->"+columns.getRows());
+				
+				 System.out.println("//---------------------//");
+				 System.out.println("Json-->");
+				 List<Row>row=columns.getRows();
+				 List<Row>rowData=  table.getRows();
+				 obj.put("id",rowData.size()+1); 
+				 for(Row rows:row) {
+					 
+					 obj.put(columns.getField(),rows.getRowName()); 
+				 }
+				 
+				 
+			 }
+			  System.out.print("obj-->"+obj);
+			List<Row>rowData=  table.getRows();
+			Row addRow=new Row();
+			addRow.setRows(obj);
+			rowData.add(addRow);
+			
+			table.setRows(rowData);
+			}
+		  createTableRepo.save(table);
+	  }
+	  
+	  
+	  public List<JSONObject> getRows(Long tableid)   
+	  {  
+		  CreateTable table= getTablesById(tableid);
+		  List<Row>rowData=  table.getRows(); 
+	      List<JSONObject>rowArr=new ArrayList<JSONObject>();
+	      
+	      for(Row row:rowData) {
+	    	  rowArr.add(row.getRows());
+	      }
+		return rowArr;
+	      
+	      
+	  } 
 
 }

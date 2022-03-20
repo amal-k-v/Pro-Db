@@ -1,10 +1,15 @@
 package com.project.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +30,10 @@ public class Columns {
     Integer width;
 	@Column(name ="editable")
     Boolean editable;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="column_row_id")  
+	List<Row> rows;
 	
 	public Long getId() {
 		return id;
@@ -62,6 +71,19 @@ public class Columns {
 	public void setEditable(Boolean editable) {
 		this.editable = editable;
 	}
+	public List<Row> getRows() {
+		return rows;
+	}
+	public void setRows(List<Row> rows) {
+		this.rows = rows;
+	}
+	@Override
+	public String toString() {
+		return "Columns [id=" + id + ", field=" + field + ", headerName=" + headerName + ", type=" + type + ", width="
+				+ width + ", editable=" + editable + ", rows=" + rows + "]";
+	}
+	
+	
 	
 
 }

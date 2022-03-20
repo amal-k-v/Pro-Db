@@ -12,12 +12,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.json.simple.JSONObject;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 @Entity
 @Table(name="create_table_details")
 public class CreateTable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name ="table_id")
 	Long id;
 	@Column(name ="table_name")
@@ -30,6 +34,15 @@ public class CreateTable {
 	List<Columns> columns;
 	
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="table_row_id")  
+	List<Row> rows;
+	
+	
+	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -54,6 +67,15 @@ public class CreateTable {
 	public void setColumns(List<Columns> columns) {
 		this.columns = columns;
 	}
+	public List<Row> getRows() {
+		return rows;
+	}
+	public void setRows(List<Row> rows) {
+		this.rows = rows;
+	}
+	
+	
+	
 	
 	
 	

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 public class CreateTable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="table_id")
 	Long id;
 	@Column(name ="table_name")

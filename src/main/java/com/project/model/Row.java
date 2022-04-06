@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
 public class Row{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="row_id")
 	Long id;
 	@Column(name ="row_name")
@@ -23,6 +23,8 @@ public class Row{
 	@Column(name ="row_data")
 	JSONObject rows;
 	
+	@Column(name ="row_key")
+	Long rowKey;
 	
 	
 	public Long getId() {
@@ -42,6 +44,12 @@ public class Row{
 	}
 	public void setRows(JSONObject rows) {
 		this.rows = rows;
+	}
+	public Long getRowKey() {
+		return rowKey;
+	}
+	public void setRowKey(Long rowKey) {
+		this.rowKey = rowKey;
 	}
 	
 	

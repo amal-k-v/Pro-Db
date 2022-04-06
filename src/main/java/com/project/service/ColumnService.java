@@ -27,5 +27,13 @@ public class ColumnService {
 	        return columns;  
 	  } 
 	  
-
+     public List<Columns> getColumnByTableId(Long id){
+    	 
+    	return columnrepo.getColumnByTableId(id);
+     }
+     
+     public List<Columns> getColumnByTableIdForTable(Long id){
+    	 
+     	return columnrepo.getColumnByTableIdForTable(id);
+      }
 }

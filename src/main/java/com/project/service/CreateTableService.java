@@ -13,12 +13,15 @@ import com.project.model.Columns;
 import com.project.model.CreateTable;
 import com.project.model.Row;
 import com.project.repository.CreateTableRepo;
+import com.project.repository.RowRepo;
 
 @Service
 @Component
 public class CreateTableService {
 	
 	@Autowired CreateTableRepo createTableRepo;
+	
+	@Autowired RowRepo rowrepo;
 	
 	  public void createATable( CreateTable  table) {
 		  createTableRepo.save(table);
@@ -62,6 +65,8 @@ public class CreateTableService {
 			 
 			  List<Columns>col=createdtable.getColumns();
 			  JSONObject obj=new JSONObject(); 
+		
+			  Long rowKey=null;
 			 for(Columns columns:col) {
 				 System.out.println(columns);
 				 
@@ -71,7 +76,13 @@ public class CreateTableService {
 				 System.out.println("Json-->");
 				 List<Row>row=columns.getRows();
 				 List<Row>rowData=  table.getRows();
-				 obj.put("id",rowData.size()+1); 
+				 int id=(rowData.size()+1);
+				 Long rowid=rowrepo.getMaxRowId()+1;
+				 rowKey=Long.parseLong(table.getId().toString()+rowid.toString());
+						// Integer.toString(id));
+					
+				 obj.put("id",rowKey); 
+				
 				 for(Row rows:row) {
 					 
 					 obj.put(columns.getField(),rows.getRowName()); 
@@ -82,10 +93,13 @@ public class CreateTableService {
 			  System.out.print("obj-->"+obj);
 			List<Row>rowData=  table.getRows();
 			Row addRow=new Row();
+		    addRow.setRowKey(rowKey);
 			addRow.setRows(obj);
 			rowData.add(addRow);
 			
+			
 			table.setRows(rowData);
+			
 			}
 		  createTableRepo.save(table);
 	  }

@@ -3,6 +3,7 @@ package com.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.model.User;
+import com.project.payload.UserSummary;
+import com.project.security.CurrentUser;
+import com.project.security.UserPrincipal;
 import com.project.service.UserService;
 
 @RestController
@@ -30,6 +34,14 @@ public class UserController {
 	public String hello(@RequestParam(value = "name", defaultValue = "Amal") String name) {
 		 return String.format("Hello %s!", name);
 	}	
+	
+	@GetMapping("/user/me")
+    @PreAuthorize("hasRole('USER')")
+    public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
+        return userSummary;
+    }
+	
 	
 	@PostMapping("/create")  
 	private Long createUser(@RequestBody User user)   

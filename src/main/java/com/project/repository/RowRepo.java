@@ -29,5 +29,8 @@ public interface RowRepo extends JpaRepository<Row,Long>{
 	       
 	       
 	       Row findByrowKey(Long key);
+	       
+	       @Query(value = "UPDATE row_details SET row_data=(?1) WHERE row_key IN(?2) RETURNING (row_key)", nativeQuery = true)
+		   List<Long> UpdateRowByKey(JSONObject rows, Long key);
 	      
 }

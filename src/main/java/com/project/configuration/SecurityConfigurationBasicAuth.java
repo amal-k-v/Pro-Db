@@ -115,7 +115,7 @@ public class SecurityConfigurationBasicAuth extends WebSecurityConfigurerAdapter
                 "/**/*.css",
                 "/**/*.js")
                 .permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"api/**").permitAll()
             .antMatchers("/api/auth/**").permitAll()
             .antMatchers("/user/user/**").permitAll()
             .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability") .permitAll()

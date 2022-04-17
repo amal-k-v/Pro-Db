@@ -14,23 +14,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.model.CreateTable;
+import com.project.model.User;
+import com.project.security.CurrentUser;
+import com.project.security.UserPrincipal;
 import com.project.service.CreateTableService;
+import com.project.service.UserService;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/table")
+@RequestMapping("api/table")
 public class TableController {
 	
 	
 
 	@Autowired CreateTableService createTableService;
+	@Autowired UserService userService;
 	
 	
 	
 	@PostMapping("/create")  
-	private Long createUser(@RequestBody CreateTable table)   
-	{  
+	private Long createUser(@RequestBody CreateTable table,@CurrentUser UserPrincipal currentUser)   
+	{     User user=userService.getUsersById(currentUser.getId());
+	      table.setUser(user);
 		  createTableService.createATable(table);
 		  return table.getId();
 	}
@@ -65,5 +71,13 @@ public class TableController {
 		return createTableService.getRows(tableid);
 	    
 	};
+	
+	@GetMapping("/byuser")  
+	private List<CreateTable> getTableByUser(@CurrentUser UserPrincipal currentUser)   
+	{  
+		User user=userService.getUsersById(currentUser.getId());
+	   
+		return createTableService.getAllTableByUser(user);
+	}
 
 }

@@ -1,6 +1,8 @@
 package com.project.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.project.model.Columns;
 import com.project.model.CreateTable;
 import com.project.model.Row;
+import com.project.model.User;
 import com.project.repository.CreateTableRepo;
 import com.project.repository.RowRepo;
 
@@ -24,6 +27,9 @@ public class CreateTableService {
 	@Autowired RowRepo rowrepo;
 	
 	  public void createATable( CreateTable  table) {
+		  //SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
+		  Date date = new Date();  
+		  table.setCreatedDate(date);
 		  createTableRepo.save(table);
 	  }
 	  
@@ -41,6 +47,10 @@ public class CreateTableService {
 	  
 	  public void delete(Long tableid)   
 	  {  
+		  
+		  CreateTable table=getTablesById(tableid);
+		  table.setUser(null);
+		  //createTableRepo.save(table);
 		  createTableRepo.deleteById(tableid);
 	  }
 	  
@@ -59,6 +69,12 @@ public class CreateTableService {
 			  table.setDescription(createdtable.getDescription());
 			}
 		  else if (type.equals("col")) {
+//			  List<Columns>col=createdtable.getColumns();
+//			  for(Columns columns:col) {
+//				  String field=columns.getField();
+//				  Integer len=field.length();
+//				  columns.setWidth(len*25);
+//			  }
 			  table.setColumns(createdtable.getColumns());
 			}
 		  else if (type.equals("row")) {
@@ -117,6 +133,14 @@ public class CreateTableService {
 		return rowArr;
 	      
 	      
+	  } 
+	  
+	  
+	  public List<CreateTable> getAllTableByUser(User user)   
+	  {  
+	       // List<CreateTable> tables = new ArrayList<CreateTable>();  
+	      //  createTableRepo.findByUser(user).forEach(table -> tables.add(table));  
+	        return createTableRepo.findByUser(user); 
 	  } 
 
 }

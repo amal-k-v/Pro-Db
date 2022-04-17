@@ -22,7 +22,7 @@ import com.project.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/user")
+@RequestMapping("api/user")
 public class UserController {
 	
 	
@@ -35,7 +35,7 @@ public class UserController {
 		 return String.format("Hello %s!", name);
 	}	
 	
-	@GetMapping("/user/me")
+	@GetMapping("/me")
     @PreAuthorize("hasRole('USER')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());

@@ -17,7 +17,7 @@ import com.project.service.ColumnService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/column")
+@RequestMapping("api/column")
 public class ColumnsController {
 	
 	

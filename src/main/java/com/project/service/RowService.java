@@ -49,6 +49,12 @@ public class RowService {
 		
 		 
 	 }
+	
+	public void updateRowByKey(JSONObject rowdata,Long key) {
+		
+		rowrepo.UpdateRowByKey(rowdata, key);
+		
+	}
 
 	
 }

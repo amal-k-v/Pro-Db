@@ -20,7 +20,9 @@ public interface ColumnsRepo extends JpaRepository<Columns,Long>{
 	  @Query(value = "SELECT * FROM columns_details WHERE table_column_id=?1", nativeQuery = true)
 	  List<Columns> getColumnByTableId( Long id);
 	  
-	  ;
+	  @Query(value = "SELECT * FROM columns_details WHERE table_column_id=?1 AND type IN('email')", nativeQuery = true)
+	  List<Columns> getColumnByTableIdAndType( Long id);
+	  
 	  
 	  @Query(value = "SELECT * FROM columns_details WHERE table_column_id=?1 and type NOT IN('note','heading')", nativeQuery = true)
 	  List<Columns> getColumnByTableIdForTable( Long id);

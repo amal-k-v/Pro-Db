@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.project.model.Columns;
+import com.project.model.Suggestions;
 import com.project.repository.ColumnsRepo;
 
 @Service
@@ -36,4 +37,19 @@ public class ColumnService {
     	 
      	return columnrepo.getColumnByTableIdForTable(id);
       }
+     
+     public  List<Suggestions> getSuggestionsByTableId(Long id){
+    	 List<Columns>col= columnrepo.getColumnByTableIdForTable(id);
+    	 List<Suggestions>suggestion = new ArrayList<Suggestions>();  
+    	 for(Columns column:col) {
+    		 Suggestions sugg=new Suggestions();
+    		 sugg.setText(column.getField());
+    		 sugg.setValue(column.getField());
+    		 sugg.setUrl(column.getField());
+    		 suggestion.add(sugg);
+    	 }
+		return suggestion;
+    	 
+    	 
+     }
 }

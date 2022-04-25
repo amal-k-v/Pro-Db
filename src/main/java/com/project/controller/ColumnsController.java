@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.model.Columns;
 import com.project.model.CreateTable;
+import com.project.model.Suggestions;
 import com.project.service.ColumnService;
 
 @RestController
@@ -46,6 +47,13 @@ public class ColumnsController {
 	private List<Columns> getColumnsByTableIdForTable(@PathVariable("id") Long id)   
 	{  
 		return  columnService.getColumnByTableIdForTable(id);
+	} 
+	
+	
+	@GetMapping("/suggestions/{id}")  
+	private  List<Suggestions> getSuggestionsByTableId(@PathVariable("id") Long id)   
+	{  
+		return  columnService.getSuggestionsByTableId(id);
 	} 
 	
 

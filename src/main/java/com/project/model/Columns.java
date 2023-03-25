@@ -31,6 +31,9 @@ public class Columns {
 	@Column(name ="editable")
     Boolean editable;
 	
+	@Column(name ="header_class")
+	String headerClassName;
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="column_row_id")  
 	List<Row> rows;
@@ -76,6 +79,13 @@ public class Columns {
 	}
 	public void setRows(List<Row> rows) {
 		this.rows = rows;
+	}
+	
+	public String getHeaderClassName() {
+		return headerClassName;
+	}
+	public void setHeaderClassName(String headerClassName) {
+		this.headerClassName = headerClassName;
 	}
 	@Override
 	public String toString() {

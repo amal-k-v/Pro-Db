@@ -58,7 +58,7 @@ public class EmailService {
 					 reMsg.add( details.getMsgBody());
 				 }
 				 
-				String newMsgBody=replaceMsg(reMsg, row, Allcolumns,index);
+				String newMsgBody=replaceMsgBody(reMsg, row, Allcolumns,index);
 				details.setMsgBody(newMsgBody);
 				
 				//............................
@@ -81,7 +81,7 @@ public class EmailService {
     	
     }
     
-    public String replaceMsg(List<String> reMsg,JSONObject row,List<Columns>Allcolumns,int index) {
+    public String replaceMsgBody(List<String> reMsg,JSONObject row,List<Columns>Allcolumns,int index) {
     	
        	String replaceMsg=reMsg.get(index);
     	System.out.println("msg Body +>"+replaceMsg);

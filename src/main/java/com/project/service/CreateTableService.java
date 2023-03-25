@@ -98,6 +98,7 @@ public class CreateTableService {
 						// Integer.toString(id));
 					
 				 obj.put("id",rowKey); 
+				 obj.put("color","default"); 
 				
 				 for(Row rows:row) {
 					 
